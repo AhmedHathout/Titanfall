@@ -7,16 +7,29 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     private AudioManager audioManager;
+    public static GameManager gameManager;
 
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
-    public void StartGame()
+    public void Level1()
     {
         audioManager.Play("Game");
-        audioManager.PlaySoundEffect("Walk");
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level1");
+        gameManager.setCurrentLevel(1);
+    }
+
+    public void Level2()
+    {
+        SceneManager.LoadScene("Level2");
+        gameManager.setCurrentLevel(2);
+    }
+
+    public void HowToPlay()
+    {
+        SceneManager.LoadScene("HowToPlay");
     }
 
     public void Credits()
@@ -26,7 +39,6 @@ public class SceneChanger : MonoBehaviour
     public void MainMenu()
     {
         audioManager.Play("Main Menu");
-        audioManager.StopSoundEffect();
         SceneManager.LoadScene("MainMenu");
     }
 

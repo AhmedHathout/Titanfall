@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public SoundTrack[] soundTracks;
     private static AudioManager instance;
+
+    public SoundTrack[] music;
+    public SoundTrack[] soundEffects;
+
+    public Slider musicLevelSlider;
+    public Slider effectLevelSlider;
 
     [HideInInspector]
     public string currentlyPlaying = "";
-    [HideInInspector]
-    public string currentlyPlayingSoundEffect = "";
+    //[HideInInspector]
+    //public string currentlyPlayingSoundEffect = "";
 
-    private volatile bool isMuted = false;
+    //private volatile bool isMuted = false;
 
     void Awake()
     {
@@ -29,11 +35,9 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        foreach(SoundTrack soundTrack in soundTracks)
+        foreach(SoundTrack soundTrack in music)
         {
-            soundTrack.audioSource = gameObject.AddComponent<AudioSource>();
-            soundTrack.audioSource.clip = soundTrack.audioClip;
-            soundTrack.audioSource.loop = soundTrack.loop;
+            PrepareSoundTrack(soundTrack);
 
             if (soundTrack.name == "Main Menu")
             {
@@ -42,19 +46,30 @@ public class AudioManager : MonoBehaviour
             }
         }
 
+        foreach(SoundTrack soundEffect in soundEffects)
+        {
+            PrepareSoundTrack(soundEffect);
+        }
+
     }
 
-    private void Update()
+    public void Start()
     {
-        if (isMuted)
-        {
-            AudioListener.pause = true;
-        }
-        else
-        {
-            AudioListener.pause = false;
-        }
+        musicLevelSlider.onValueChanged.AddListener(delegate { SetVolume(musicLevelSlider.value, music); });
+        effectLevelSlider.onValueChanged.AddListener(delegate { SetVolume(effectLevelSlider.value, soundEffects); });
     }
+
+    //private void Update()
+    //{
+    //    if (isMuted)
+    //    {
+    //        AudioListener.pause = true;
+    //    }
+    //    else
+    //    {
+    //        AudioListener.pause = false;
+    //    }
+    //}
 
     public void Play(string name, bool stopCurrentlyPlaying)
     {
@@ -68,7 +83,7 @@ public class AudioManager : MonoBehaviour
         {
             StopCurrentlyPlaying();
         }
-        SoundTrack soundTrack = Array.Find(soundTracks, s => s.name == name);
+        SoundTrack soundTrack = Array.Find(music, s => s.name == name);
         if (soundTrack != null)
         {
             soundTrack.Play();
@@ -91,7 +106,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopCurrentlyPlaying()
     {
-        SoundTrack soundTrack = Array.Find(soundTracks, s => s.name == currentlyPlaying);
+        SoundTrack soundTrack = Array.Find(music, s => s.name == currentlyPlaying);
         if (soundTrack != null)
         {
             soundTrack.Stop();
@@ -103,38 +118,61 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopSoundEffect(String name)
+    //public void StopSoundEffect(String name)
+    //{
+    //    SoundTrack soundTrack = Array.Find(music, s => s.name == name);
+    //    if (soundTrack != null)
+    //    {
+    //        soundTrack.Stop();
+    //        //currentlyPlayingSoundEffect = "";
+    //    }
+    //}
+
+    //public void StopSoundEffect()
+    //{
+    //    StopSoundEffect(currentlyPlayingSoundEffect);
+    //}
+
+    //public void PlaySoundEffect(string name)
+    //{
+    //    if (currentlyPlayingSoundEffect == name)
+    //        return;
+    //    StopSoundEffect(currentlyPlayingSoundEffect);
+    //    currentlyPlayingSoundEffect = "";
+    //    SoundTrack soundTrack = Array.Find(music, s => s.name == name);
+    //    if (soundTrack != null)
+    //    {
+    //        soundTrack.Play();
+    //        currentlyPlayingSoundEffect = name;
+    //    }
+    //}
+
+    //public void toggleMute()
+    //{
+    //    isMuted = !isMuted;
+    //    Debug.Log("Mute: " + isMuted);
+    //}
+
+    public void SetVolume(float newVolume, SoundTrack[] soundTracks)
     {
-        SoundTrack soundTrack = Array.Find(soundTracks, s => s.name == name);
-        if (soundTrack != null)
+        if (newVolume > 1 || newVolume < 0)
         {
-            soundTrack.Stop();
-            //currentlyPlayingSoundEffect = "";
-        }
-    }
-
-    public void StopSoundEffect()
-    {
-        StopSoundEffect(currentlyPlayingSoundEffect);
-    }
-
-    public void PlaySoundEffect(string name)
-    {
-        if (currentlyPlayingSoundEffect == name)
+            Debug.LogError("Volume out of bounds: " + newVolume);
             return;
-        StopSoundEffect(currentlyPlayingSoundEffect);
-        currentlyPlayingSoundEffect = "";
-        SoundTrack soundTrack = Array.Find(soundTracks, s => s.name == name);
-        if (soundTrack != null)
+        }
+        
+        foreach(SoundTrack soundTrack in soundTracks)
         {
-            soundTrack.Play();
-            currentlyPlayingSoundEffect = name;
+            soundTrack.audioSource.volume = newVolume;
+            //soundTrack.volume = newVolume;
         }
     }
 
-    public void toggleMute()
+    private void PrepareSoundTrack(SoundTrack soundTrack)
     {
-        isMuted = !isMuted;
-        Debug.Log("Mute: " + isMuted);
+        soundTrack.audioSource = gameObject.AddComponent<AudioSource>();
+        soundTrack.audioSource.clip = soundTrack.audioClip;
+        soundTrack.audioSource.loop = soundTrack.loop;
+        soundTrack.audioSource.volume = musicLevelSlider.value;
     }
 }
