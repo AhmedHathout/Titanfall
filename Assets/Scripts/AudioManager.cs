@@ -55,8 +55,11 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-        musicLevelSlider.onValueChanged.AddListener(delegate { SetVolume(musicLevelSlider.value, music); });
-        effectLevelSlider.onValueChanged.AddListener(delegate { SetVolume(effectLevelSlider.value, soundEffects); });
+        if (musicLevelSlider != null && effectLevelSlider != null)
+        {
+            musicLevelSlider.onValueChanged.AddListener(delegate { SetVolume(musicLevelSlider.value, music); });
+            effectLevelSlider.onValueChanged.AddListener(delegate { SetVolume(effectLevelSlider.value, soundEffects); });
+        }
     }
 
     //private void Update()
@@ -173,6 +176,6 @@ public class AudioManager : MonoBehaviour
         soundTrack.audioSource = gameObject.AddComponent<AudioSource>();
         soundTrack.audioSource.clip = soundTrack.audioClip;
         soundTrack.audioSource.loop = soundTrack.loop;
-        soundTrack.audioSource.volume = musicLevelSlider.value;
+        soundTrack.audioSource.volume = (musicLevelSlider != null)? musicLevelSlider.value : 1;
     }
 }

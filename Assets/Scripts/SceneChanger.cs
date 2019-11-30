@@ -42,6 +42,17 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void GameFinished()
+    {
+        audioManager.Play("Main Menu");
+        SceneManager.LoadScene("GameFinished");
+    }
+
+    public void GameOver()
+    {
+        audioManager.Play("Main Menu");
+        SceneManager.LoadScene("GameOver");
+    }
     public void Quit()
     {
         Application.Quit();

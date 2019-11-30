@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+namespace Assets.Scripts
 {
-    public GameObject pauseMenuPanel;
-    private GameManager gameManager;
-    public void TogglePause()
+    public class PauseMenu : MonoBehaviour
     {
-        gameManager.gameIsPaused = !gameManager.gameIsPaused;
-        pauseMenuPanel.SetActive(gameManager.gameIsPaused);
-        Time.timeScale = 1 - Time.timeScale;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-    }
-
-    void Update()
-    {
-        if (gameManager.currentLevel > 0)
+        public GameObject pauseMenuPanel;
+        private GameManager gameManager = GameManager.instance;
+        public void TogglePause()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            gameManager.gameIsPaused = !gameManager.gameIsPaused;
+            pauseMenuPanel.SetActive(gameManager.gameIsPaused);
+            Time.timeScale = 1 - Time.timeScale;
+        }
+
+        private void Update()
+        {
+            if (gameManager.currentLevel > 0)
             {
-                TogglePause();
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    TogglePause();
+                }
             }
         }
     }

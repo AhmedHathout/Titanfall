@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public static GameManager instance;
     private static SceneChanger sceneChanger;
 
     [HideInInspector]
     public int currentLevel = 0;
+    [HideInInspector]
     public bool gameIsPaused = false;
+
     private GameObject pausePanel;
 
     void Awake()
@@ -34,6 +36,12 @@ public class GameManager : MonoBehaviour
         sceneChanger = GetComponent<SceneChanger>();
     }
 
+    private void Update()
+    {
+        // Next Level Cheats
+        LoadNextLevel();
+    }
+
     // Update is called once per frame
 
 
@@ -47,6 +55,14 @@ public class GameManager : MonoBehaviour
     public void setCurrentLevel(int newLevel)
     {
         this.currentLevel = newLevel;
+
+        if (this.currentLevel == 0)
+        {
+            Debug.Log("Cursor should be enabled");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            //Screen.lockCursor = false;
+        }
         //pausePanel = GameObject.Find("Pause Panel");
         //pausePanel.SetActive(false);
     }
@@ -56,8 +72,49 @@ public class GameManager : MonoBehaviour
         if (currentLevel == 1) {
             sceneChanger.Level1();
         }
-        else {
+        else if (currentLevel == 2) {
             sceneChanger.Level2();
+        }
+
+        else
+        {
+            Debug.LogWarning("Cannot restart level: " + currentLevel);
+        }
+    }
+
+    public void LoadGameFinished()
+    {
+        setCurrentLevel(0);
+        sceneChanger.GameFinished();
+    }
+
+    public void LoadGameOver()
+    {
+        setCurrentLevel(0);
+        sceneChanger.GameOver();
+    }
+
+    public void LoadNextLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (currentLevel == 0)
+            {
+                setCurrentLevel(1);
+                sceneChanger.Level1();
+            }
+
+            else if (currentLevel == 1)
+            {
+                setCurrentLevel(2);
+                sceneChanger.Level2();
+            }
+
+            else if (currentLevel == 2)
+            {
+                setCurrentLevel(0);
+                sceneChanger.GameFinished();
+            }
         }
     }
 }
