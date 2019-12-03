@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 127213133}
   m_Layer: 5
   m_Name: Music Level Slider
-  m_TagString: Untagged
+  m_TagString: Music Level Slider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -849,6 +849,18 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &485755413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1058615402380190530, guid: 278e6bd7b28618749a498f31add29e28,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058615403930833882}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067e0b6350a7cca4f9ebc227650690de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &631759805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,7 +1227,7 @@ GameObject:
   - component: {fileID: 947077810}
   m_Layer: 5
   m_Name: Effects Level Slider
-  m_TagString: Untagged
+  m_TagString: Effects Level Slider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2339,8 +2351,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1670701347}
-        m_MethodName: Level1
+      - m_Target: {fileID: 485755413}
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

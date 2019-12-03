@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
         LoadNextLevel();
     }
 
+    public void StartGame()
+    {
+        SetCurrentLevel(1);
+        sceneChanger.Level1();
+    }
     // Update is called once per frame
 
 
@@ -52,23 +57,21 @@ public class GameManager : MonoBehaviour
     //    Time.timeScale = 1 - Time.timeScale;
     //}
 
-    public void setCurrentLevel(int newLevel)
+    public void SetCurrentLevel(int newLevel)
     {
         this.currentLevel = newLevel;
 
         if (this.currentLevel == 0)
         {
-            Debug.Log("Cursor should be enabled");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             //Screen.lockCursor = false;
         }
-        //pausePanel = GameObject.Find("Pause Panel");
-        //pausePanel.SetActive(false);
     }
 
     public void RestartLevel()
     {
+        Debug.Log("Level Restarted");
         if (currentLevel == 1) {
             sceneChanger.Level1();
         }
@@ -82,39 +85,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadGameFinished()
-    {
-        setCurrentLevel(0);
-        sceneChanger.GameFinished();
-    }
-
     public void LoadGameOver()
     {
-        setCurrentLevel(0);
+        SetCurrentLevel(0);
         sceneChanger.GameOver();
+    }
+
+    public void LoadCredits()
+    {
+        SetCurrentLevel(0);
+        sceneChanger.Credits();
     }
 
     public void LoadNextLevel()
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
+            
             if (currentLevel == 0)
             {
-                setCurrentLevel(1);
+                SetCurrentLevel(1);
                 sceneChanger.Level1();
             }
 
             else if (currentLevel == 1)
             {
-                setCurrentLevel(2);
+                SetCurrentLevel(2);
                 sceneChanger.Level2();
             }
 
             else if (currentLevel == 2)
             {
-                setCurrentLevel(0);
-                sceneChanger.GameFinished();
+                SetCurrentLevel(0);
+                sceneChanger.Credits();
+                GameObject FPS = GameObject.Find("FPSController");
+                if (FPS != null)
+                {
+                    Destroy(FPS);
+                }
             }
         }
     }
+
+    public void LoadMainMenu()
+    {
+        SetCurrentLevel(0);
+        GameObject FPS = GameObject.Find("FPSController");
+        if (FPS != null)
+        {
+            Destroy(FPS);
+        }
+        sceneChanger.MainMenu();
+    }
+
 }

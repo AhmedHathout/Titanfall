@@ -8,6 +8,7 @@ namespace Assets.Scripts
     {
         public GameObject pauseMenuPanel;
         private GameManager gameManager = GameManager.instance;
+
         public void TogglePause()
         {
             gameManager.gameIsPaused = !gameManager.gameIsPaused;

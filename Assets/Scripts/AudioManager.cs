@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager instance;
+    public static AudioManager instance;
 
     public SoundTrack[] music;
     public SoundTrack[] soundEffects;
 
     public Slider musicLevelSlider;
     public Slider effectLevelSlider;
+    [HideInInspector]
+    public float musicVolume;
+    //[HideInInspector]
+    public float effectsVolume;
 
     [HideInInspector]
     public string currentlyPlaying = "";
     //[HideInInspector]
     //public string currentlyPlayingSoundEffect = "";
-
-    //private volatile bool isMuted = false;
 
     void Awake()
     {
@@ -51,28 +54,23 @@ public class AudioManager : MonoBehaviour
             PrepareSoundTrack(soundEffect);
         }
 
+        EditorUtility.SetDirty(gameObject);
     }
 
     public void Start()
     {
+        musicVolume = 1f;
+        effectsVolume = 1f;
         if (musicLevelSlider != null && effectLevelSlider != null)
         {
-            musicLevelSlider.onValueChanged.AddListener(delegate { SetVolume(musicLevelSlider.value, music); });
-            effectLevelSlider.onValueChanged.AddListener(delegate { SetVolume(effectLevelSlider.value, soundEffects); });
+            AddSliders();
         }
     }
 
-    //private void Update()
-    //{
-    //    if (isMuted)
-    //    {
-    //        AudioListener.pause = true;
-    //    }
-    //    else
-    //    {
-    //        AudioListener.pause = false;
-    //    }
-    //}
+    private void Update()
+    {
+
+    }
 
     public void Play(string name, bool stopCurrentlyPlaying)
     {
@@ -150,12 +148,6 @@ public class AudioManager : MonoBehaviour
     //    }
     //}
 
-    //public void toggleMute()
-    //{
-    //    isMuted = !isMuted;
-    //    Debug.Log("Mute: " + isMuted);
-    //}
-
     public void SetVolume(float newVolume, SoundTrack[] soundTracks)
     {
         if (newVolume > 1 || newVolume < 0)
@@ -167,7 +159,6 @@ public class AudioManager : MonoBehaviour
         foreach(SoundTrack soundTrack in soundTracks)
         {
             soundTrack.audioSource.volume = newVolume;
-            //soundTrack.volume = newVolume;
         }
     }
 
@@ -177,5 +168,37 @@ public class AudioManager : MonoBehaviour
         soundTrack.audioSource.clip = soundTrack.audioClip;
         soundTrack.audioSource.loop = soundTrack.loop;
         soundTrack.audioSource.volume = (musicLevelSlider != null)? musicLevelSlider.value : 1;
+    }
+
+    public void AddSliders()
+    {
+        StartCoroutine(WaitForSceneToLoadToAddSliders());
+    }
+
+    private IEnumerator WaitForSceneToLoadToAddSliders()
+    {
+        // This waiting is just for the scene to be loaded
+        yield return new WaitForSeconds(0.1f);
+        Slider[] sliders = FindObjectsOfType<Slider>();
+
+        musicLevelSlider = Array.Find(sliders, slider => slider.name.Equals("Music Level Slider"));
+        effectLevelSlider = Array.Find(sliders, slider => slider.name.Equals("Effects Level Slider"));
+
+        musicLevelSlider
+            .onValueChanged
+            .AddListener(delegate 
+            { 
+                SetVolume(musicLevelSlider.value, music); 
+                musicVolume = musicLevelSlider.value;  
+            });
+        musicLevelSlider.value = musicVolume;
+        effectLevelSlider
+            .onValueChanged
+            .AddListener(delegate 
+            { 
+                SetVolume(effectLevelSlider.value, soundEffects); 
+                effectsVolume = effectLevelSlider.value;  
+            });
+        effectLevelSlider.value = effectsVolume;
     }
 }

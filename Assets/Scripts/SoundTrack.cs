@@ -9,10 +9,7 @@ public class SoundTrack
     public AudioClip audioClip;
     public bool loop;
 
-    //[Range(0f, 1f)]
-    //public float volume = 1f; 
-
-    [HideInInspector]
+    //[HideInInspector]
     public AudioSource audioSource;
 
     public void Play()

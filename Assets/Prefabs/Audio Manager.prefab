@@ -55,4 +55,6 @@ MonoBehaviour:
   soundEffects: []
   musicLevelSlider: {fileID: 0}
   effectLevelSlider: {fileID: 0}
+  musicVolume: 0
+  effectsVolume: 1
   currentlyPlaying: 

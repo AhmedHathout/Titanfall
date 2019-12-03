@@ -15,7 +15,7 @@ public class WinGame : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            gameManager.LoadGameFinished();
+            gameManager.LoadCredits();
             Destroy(FPS);
         }
     }

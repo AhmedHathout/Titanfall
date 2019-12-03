@@ -18,13 +18,13 @@ public class SceneChanger : MonoBehaviour
     {
         audioManager.Play("Game");
         SceneManager.LoadScene("Level1");
-        gameManager.setCurrentLevel(1);
+        gameManager.SetCurrentLevel(1);
     }
 
     public void Level2()
     {
         SceneManager.LoadScene("Level2");
-        gameManager.setCurrentLevel(2);
+        gameManager.SetCurrentLevel(2);
     }
 
     public void HowToPlay()
@@ -40,12 +40,7 @@ public class SceneChanger : MonoBehaviour
     {
         audioManager.Play("Main Menu");
         SceneManager.LoadScene("MainMenu");
-    }
-
-    public void GameFinished()
-    {
-        audioManager.Play("Main Menu");
-        SceneManager.LoadScene("GameFinished");
+        audioManager.AddSliders();
     }
 
     public void GameOver()
