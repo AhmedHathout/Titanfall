@@ -14,9 +14,8 @@ public class AudioManager : MonoBehaviour
 
     public Slider musicLevelSlider;
     public Slider effectLevelSlider;
-    [HideInInspector]
+
     public float musicVolume;
-    //[HideInInspector]
     public float effectsVolume;
 
     [HideInInspector]
@@ -59,19 +58,12 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-        musicVolume = 1f;
-        effectsVolume = 1f;
         if (musicLevelSlider != null && effectLevelSlider != null)
         {
             AddSliders();
         }
     }
-
-    private void Update()
-    {
-
-    }
-
+    
     public void Play(string name, bool stopCurrentlyPlaying)
     {
         // If it is the same music, do nothing

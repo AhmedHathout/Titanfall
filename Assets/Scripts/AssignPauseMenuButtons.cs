@@ -13,7 +13,6 @@ public class AssignPauseMenuButtons : MonoBehaviour
 
     private void Start()
     {
-        //gameManager = FindObjectOfType<GameManager>();
         AssignButtons();
     }
 
@@ -34,9 +33,11 @@ public class AssignPauseMenuButtons : MonoBehaviour
         restartLevel.onClick.AddListener(delegate
         {
             gameManager.RestartLevel();
+            gameManager.ToggleTimeScale();
         });
         mainMenu.onClick.AddListener(delegate
         {
+            gameManager.ToggleTimeScale();
             gameManager.LoadMainMenu();
         });
     }

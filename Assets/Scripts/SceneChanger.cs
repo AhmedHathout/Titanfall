@@ -18,13 +18,13 @@ public class SceneChanger : MonoBehaviour
     {
         audioManager.Play("Game");
         SceneManager.LoadScene("Level1");
-        gameManager.SetCurrentLevel(1);
+        //gameManager.SetCurrentLevel(1);
     }
 
     public void Level2()
     {
         SceneManager.LoadScene("Level2");
-        gameManager.SetCurrentLevel(2);
+        //gameManager.SetCurrentLevel(2);
     }
 
     public void HowToPlay()
