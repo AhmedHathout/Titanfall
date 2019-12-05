@@ -17,7 +17,7 @@ public class WallRun : MonoBehaviour
     private FirstPersonController FPS;
     private Rigidbody rb;
 
-    public float runTime;
+    public float runTime = 0.1f;
 
     private float m_OriginalGravityMultiplier;
 

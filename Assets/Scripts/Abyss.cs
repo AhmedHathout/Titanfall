@@ -17,6 +17,8 @@ public class Abyss : MonoBehaviour
         //if (other.tag.Equals("Player"))
         //{
         gameManager.LoadGameOver();
+        Destroy(FPS);
+
         //}
     }
 }

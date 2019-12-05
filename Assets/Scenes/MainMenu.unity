@@ -716,7 +716,7 @@ RectTransform:
   m_Children:
   - {fileID: 631759806}
   m_Father: {fileID: 1670701346}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -849,18 +849,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &485755413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1058615402380190530, guid: 278e6bd7b28618749a498f31add29e28,
-    type: 3}
-  m_PrefabInstance: {fileID: 1058615403930833882}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 067e0b6350a7cca4f9ebc227650690de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &631759805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1112,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 5.202e-42, y: 6e-44, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1215,6 +1203,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803807276}
   m_CullTransparentMesh: 0
+--- !u!114 &925663099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1058615402380190528, guid: 278e6bd7b28618749a498f31add29e28,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058615403930833882}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679ad39a35ad4e54e895f11a6bffa4b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &947077808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1502,7 @@ RectTransform:
   m_Children:
   - {fileID: 1889725958}
   m_Father: {fileID: 1670701346}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1552,8 +1552,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 485755413}
-        m_MethodName: LoadHowToPlay
+      - m_Target: {fileID: 1670701347}
+        m_MethodName: HowToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1629,7 +1629,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1670701346}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1707,10 +1707,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2123768143}
-  - {fileID: 1458166805}
   - {fileID: 1866482145}
   - {fileID: 386317033}
   - {fileID: 1501780634}
+  - {fileID: 1458166805}
   - {fileID: 947077809}
   - {fileID: 1143332105}
   - {fileID: 127213132}
@@ -1949,7 +1949,7 @@ RectTransform:
   m_Children:
   - {fileID: 181253762}
   m_Father: {fileID: 1670701346}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1999,8 +1999,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 485755413}
-        m_MethodName: LoadCredits
+      - m_Target: {fileID: 1670701347}
+        m_MethodName: Credits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2351,8 +2351,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 485755413}
-        m_MethodName: StartGame
+      - m_Target: {fileID: 925663099}
+        m_MethodName: Loadout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2475,11 +2475,6 @@ PrefabInstance:
       propertyPath: effectLevelSlider
       value: 
       objectReference: {fileID: 947077810}
-    - target: {fileID: 829269532285380808, guid: a0cf180bcb4d600428aafd1734396bee,
-        type: 3}
-      propertyPath: musicVolume
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0cf180bcb4d600428aafd1734396bee, type: 3}
 --- !u!1001 &1058615403930833882
