@@ -11,19 +11,14 @@ namespace Assets.Scripts
 
         public void TogglePause()
         {
-            gameManager.gameIsPaused = !gameManager.gameIsPaused;
-            pauseMenuPanel.SetActive(gameManager.gameIsPaused);
-            Time.timeScale = 1 - Time.timeScale;
+            gameManager.TogglePause(pauseMenuPanel);
         }
 
         private void Update()
         {
-            if (gameManager.currentLevel > 0)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    TogglePause();
-                }
+                gameManager.TogglePause(pauseMenuPanel);
             }
         }
     }

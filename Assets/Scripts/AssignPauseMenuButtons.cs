@@ -34,9 +34,11 @@ public class AssignPauseMenuButtons : MonoBehaviour
         restartLevel.onClick.AddListener(delegate
         {
             gameManager.RestartLevel();
+            gameManager.ToggleTimeScale();
         });
         mainMenu.onClick.AddListener(delegate
         {
+            gameManager.ToggleTimeScale();
             gameManager.LoadMainMenu();
         });
     }
