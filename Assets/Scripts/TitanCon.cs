@@ -36,7 +36,7 @@ public class TitanCon : MonoBehaviour
             }
             transform.Translate(0, 0, 2);
         }
-        if (transform.position.z - FindObjectOfType<test>().transform.position.z < 332 && !chasing)
+        if (transform.position.z - FindObjectOfType<Crouch>().transform.position.z < 332 && !chasing)
         {
             agent.destination = target.position;
             chasing = true;
