@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private static SceneChanger sceneChanger;
     private string currentScene;
 
+    public List<string> weapons = new List<string>();
+
     [HideInInspector]
     public int currentLevel = 0;
     [HideInInspector]
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     private static string gameOver = "GameOver";
     private static string credits = "Credits";
     private static string howToPlay = "HowToPlay";
+    private static string loadout = "Loadout";
 
     void Awake()
     {
@@ -205,7 +208,7 @@ public class GameManager : MonoBehaviour
 
         startGameButton.onClick.AddListener(delegate
         {
-            StartGame();
+            LoadLoadoutScreen();
         });
     }
 
@@ -275,6 +278,21 @@ public class GameManager : MonoBehaviour
     {
         gameIsPaused = !gameIsPaused;
         Time.timeScale = 1 - Time.timeScale;
+    }
+
+    public void LoadLoadoutScreen()
+    {
+        sceneChanger.Loadout();
+        currentScene = loadout;
+        currentLevel = 0;
+    }
+
+    public void weaponschosen(List<string> weaponselect)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            weapons.Add(weaponselect[i]);
+        }
     }
     //private void DestroyFPSController()
     //{

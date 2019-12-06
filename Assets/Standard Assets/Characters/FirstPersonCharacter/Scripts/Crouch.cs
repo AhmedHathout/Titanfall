@@ -35,7 +35,6 @@ public class Crouch : MonoBehaviour
         {
             m_Crouch = !m_Crouch;
         }
-
         CheckCrouch();
     }
 

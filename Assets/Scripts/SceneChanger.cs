@@ -14,6 +14,11 @@ public class SceneChanger : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         gameManager = FindObjectOfType<GameManager>();
     }
+
+    public void Loadout()
+    {
+        SceneManager.LoadScene("Loadout");
+    }
     public void Level1()
     {
         audioManager.Play("Game");

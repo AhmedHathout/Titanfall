@@ -27,7 +27,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        [SerializeField] private bool doubleJump;         
+        [SerializeField] private bool doubleJump;
+        public bool titanMode;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -64,7 +65,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump)
+            if (!m_Jump && !titanMode)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }

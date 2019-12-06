@@ -37,7 +37,7 @@ public class PilotEnemyCon : MonoBehaviour
             }
             transform.Translate(0, 0, 1);
         }
-        if (transform.position.z - FindObjectOfType<test>().transform.position.z < 332 && !chasing)
+        if (transform.position.z - FindObjectOfType<Crouch>().transform.position.z < 332 && !chasing)
         {
             agent.destination = target.position;
             chasing = true;

@@ -79,6 +79,5 @@ public class WallRun : MonoBehaviour
         isWallR = false;
         rb.useGravity = true;
         FPS.m_GravityMultiplier = m_OriginalGravityMultiplier;
-
     }
 }
