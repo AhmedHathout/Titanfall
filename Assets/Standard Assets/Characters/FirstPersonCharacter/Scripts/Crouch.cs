@@ -9,6 +9,7 @@ public class Crouch : MonoBehaviour
 
     private bool m_Crouch = false;
     private float m_OriginalHeight;
+    public bool canCrouch = true;
 
     [SerializeField]
     private float m_CrouchHeight;
@@ -40,7 +41,7 @@ public class Crouch : MonoBehaviour
 
     private void CheckCrouch()
     {
-        if (m_Crouch == true)
+        if (m_Crouch == true && canCrouch)
         {
             m_CharacterController.height = m_CrouchHeight;
         }
