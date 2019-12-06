@@ -5,6 +5,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class CallTitan : MonoBehaviour
 {
+    // TODO Handle not taking damage while using the defensive ability shield
 
     public GameObject playerTitan;
     public int titanMeter = 0;
@@ -21,10 +22,22 @@ public class CallTitan : MonoBehaviour
     public int dashDistance = 500;
 
     public int timeToIncreaseDash = 5;
+
+    public GameObject defensiveAbilityShield;
+
+    public int defensiveAbilityMeter = 0;
+    public int defensiveAbilityMaxValue = 15; // 15 seconds to refill defensive ability
+    public bool defensiveAbilityActivated = false;
+    public int defensiveAbilityDuration = 10;
+
+    public int coreAbilityMeter = 0;
+    public int coreAbilityMaxValue = 100;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(IncrementDashMeter());
+        StartCoroutine(IncrementDefensiveAbility());
     }
 
     // Update is called once per frame
@@ -33,6 +46,8 @@ public class CallTitan : MonoBehaviour
         CallInTitan();
         EmbarkTitan();
         Dash();
+        activateDefensiveAbility();
+        defensiveAbilityShield.SetActive(defensiveAbilityActivated);
     }
 
     private void CallInTitan()
@@ -112,4 +127,78 @@ public class CallTitan : MonoBehaviour
         // TODO Make Player invincible
     }
 
+    public void activateDefensiveAbility()
+    {
+        if (Input.GetButtonDown("Defensive Ability"))
+        {
+            if (defensiveAbilityMeter >= defensiveAbilityMaxValue && titanEmbarked)
+            {
+                defensiveAbilityMeter = 0;
+                defensiveAbilityActivated = true;
+                StartCoroutine(DeactivatedefensiveAbility());
+            }
+        }
+    }
+
+    IEnumerator DeactivatedefensiveAbility()
+    {
+        yield return new WaitForSeconds(defensiveAbilityDuration);
+        defensiveAbilityActivated = false;
+    }
+
+    IEnumerator IncrementDefensiveAbility()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (!defensiveAbilityActivated)
+            {
+                defensiveAbilityMeter = Mathf.Min(defensiveAbilityMeter + 1, defensiveAbilityMaxValue);
+            }
+        }
+    }
+
+    private void CoreAbility()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            coreAbilityMeter = coreAbilityMaxValue;
+        }
+        if (Input.GetButtonDown("Core Ability"))
+        {
+            if (coreAbilityMeter >= coreAbilityMaxValue)
+            {
+                coreAbilityMeter = 0;
+
+                GameObject nearestenemy = getNearestEnemy();
+
+                if (nearestenemy == null)
+                {
+                    return;
+                }
+
+                // TODO make the player aim at that enemy 
+            }
+        }
+    }
+
+    private GameObject getNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        float minDistance = 100000000000;
+        GameObject nearestEnemy = null;
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(this.transform.position, enemy.transform.position);
+
+            if (distanceToEnemy < minDistance)
+            {
+                minDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+        }
+
+        return nearestEnemy;
+    }
 }
