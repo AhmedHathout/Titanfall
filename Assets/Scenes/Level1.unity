@@ -2326,12 +2326,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!1 &855587080 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1777870699331626, guid: ac2073ec8e965a9418374e28874818b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1057760547}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &929153824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2744,6 +2738,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac2073ec8e965a9418374e28874818b4, type: 3}
+--- !u!1 &1057760548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1777870699331626, guid: ac2073ec8e965a9418374e28874818b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1057760547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1139442074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3936,12 +3936,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1602900993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 685360cef60d7fb42880b4b6c2c6ac8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cac8dc196d5d2e40a6f0b43650bf9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTitan: {fileID: 855587080}
+  playerTitan: {fileID: 1057760548}
   titanMeter: 0
   titanEmbarked: 0
+  embarkDistance: 50
+  dashMeter: 0
+  maximumDashMeterValue: 3
 --- !u!1 &1611417641
 GameObject:
   m_ObjectHideFlags: 0

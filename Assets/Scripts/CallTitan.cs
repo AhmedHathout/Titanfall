@@ -8,18 +8,23 @@ public class CallTitan : MonoBehaviour
 
     public GameObject playerTitan;
     public int titanMeter = 0;
-    public static int fullMeter = 100;
+    public static int fullTitanMeter = 100;
 
     public static int scalingValue = 30;
 
     public bool titanEmbarked = false;
     public int embarkDistance = 50;
 
+    public int dashMeter = 0;
+    public int maximumDashMeterValue = 3;
 
+    public int dashDistance = 500;
+
+    public int timeToIncreaseDash = 5;
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(IncrementDashMeter());
     }
 
     // Update is called once per frame
@@ -27,6 +32,7 @@ public class CallTitan : MonoBehaviour
     {
         CallInTitan();
         EmbarkTitan();
+        Dash();
     }
 
     private void CallInTitan()
@@ -34,7 +40,7 @@ public class CallTitan : MonoBehaviour
         if (Input.GetButtonDown("Call Titan"))
         {
             Debug.Log("Calling Titan");
-            if (titanMeter >= fullMeter)
+            if (titanMeter >= fullTitanMeter)
             {
                 titanMeter = 0;
                 playerTitan.transform.position = new Vector3(transform.position.x, playerTitan.transform.position.y, transform.position.z);
@@ -44,7 +50,7 @@ public class CallTitan : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            titanMeter = fullMeter;
+            titanMeter = fullTitanMeter;
         }
     }
 
@@ -77,5 +83,33 @@ public class CallTitan : MonoBehaviour
         // TODO handle titan health
     }
 
+    public void incrementTitanMeter(int value)
+    {
+        titanMeter = Mathf.Min(titanMeter + value, fullTitanMeter);
+    }
+
+    IEnumerator IncrementDashMeter()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(timeToIncreaseDash);
+            dashMeter = Mathf.Min(dashMeter + 1, maximumDashMeterValue);
+        }
+    }
+
+    public void Dash()
+    {
+        if (Input.GetButtonDown("Jump") && dashMeter > 0)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            transform.Translate(5000, 0, 5000);
+            //transform.position = new Vector3(transform.position.x + 5000, transform.position.y, transform.position.z);
+            dashMeter -= 1;
+        }
+
+        // TODO Make Player invincible
+    }
 
 }
