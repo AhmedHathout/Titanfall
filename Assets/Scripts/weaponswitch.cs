@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class weaponswitch : MonoBehaviour
 {
 
     public int selectedweapon = 0;
+    public GameObject weaponName;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +45,7 @@ public class weaponswitch : MonoBehaviour
             if(i == selectedweapon)
             {
                 weapon.gameObject.SetActive(true);
-
+                GameObject.Find("HUD/Pilot HUD/WeaponSelected/WeaponName").GetComponent<Text>().text = weapon.gameObject.name;
             }
             else
             {
@@ -53,5 +54,6 @@ public class weaponswitch : MonoBehaviour
             i++;
 
         }
+
     }
 }

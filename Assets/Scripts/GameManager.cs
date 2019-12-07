@@ -284,7 +284,7 @@ public class GameManager : MonoBehaviour
     {
         sceneChanger.Loadout();
         currentScene = loadout;
-        currentLevel = 0;
+        currentLevel = 1;
     }
 
     public void weaponschosen(List<string> weaponselect)

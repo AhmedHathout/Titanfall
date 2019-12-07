@@ -6,6 +6,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class CallTitan : MonoBehaviour
 {
     // TODO Handle not taking damage while using the defensive ability shield
+    private GameManager gameManager = GameManager.instance;
 
     public GameObject playerTitan;
     public int titanMeter = 0;
@@ -33,6 +34,18 @@ public class CallTitan : MonoBehaviour
     public int coreAbilityMeter = 0;
     public int coreAbilityMaxValue = 100;
 
+    public GameObject titanHUD;
+    public GameObject pilotHUD;
+
+    public int playerTitanMaxHealth = 400;
+    public int playerTitanCurrentHealth = 400;
+    public bool titanExists = false;
+
+    public int playerPilotMaxHealth = 100;
+    public int playerPilotCurrentHealth = 100;
+
+    public Transform aimedEnemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +61,7 @@ public class CallTitan : MonoBehaviour
         Dash();
         activateDefensiveAbility();
         defensiveAbilityShield.SetActive(defensiveAbilityActivated);
+        CoreAbility();
     }
 
     private void CallInTitan()
@@ -60,6 +74,7 @@ public class CallTitan : MonoBehaviour
                 titanMeter = 0;
                 playerTitan.transform.position = new Vector3(transform.position.x, playerTitan.transform.position.y, transform.position.z);
                 playerTitan.SetActive(true);
+                titanExists = true;
             }
         }
 
@@ -92,13 +107,16 @@ public class CallTitan : MonoBehaviour
 
             GetComponent<FirstPersonController>().titanMode = titanEmbarked;
             GetComponent<Crouch>().canCrouch = !titanEmbarked;
+            titanHUD.SetActive(titanEmbarked);
+            pilotHUD.SetActive(!titanEmbarked);
+
+
         }
 
-        // TOOO Change HUD
         // TODO handle titan health
     }
 
-    public void incrementTitanMeter(int value)
+    public void IncrementTitanMeter(int value)
     {
         titanMeter = Mathf.Min(titanMeter + value, fullTitanMeter);
     }
@@ -119,8 +137,8 @@ public class CallTitan : MonoBehaviour
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
-            transform.Translate(5000, 0, 5000);
-            //transform.position = new Vector3(transform.position.x + 5000, transform.position.y, transform.position.z);
+            GetComponent<CharacterController>().Move(new Vector3(horizontal * 150, 0, vertical * 150));
+
             dashMeter -= 1;
         }
 
@@ -177,6 +195,13 @@ public class CallTitan : MonoBehaviour
                     return;
                 }
 
+                GetComponent<FirstPersonController>().autoAim = true;
+                aimedEnemy.position = new Vector3(nearestenemy.transform.position.x,
+                    nearestenemy.transform.position.y + 30,
+                    nearestenemy.transform.position.z);
+                transform.LookAt(aimedEnemy);
+                StartCoroutine(ResetCamera());
+
                 // TODO make the player aim at that enemy 
             }
         }
@@ -200,5 +225,33 @@ public class CallTitan : MonoBehaviour
         }
 
         return nearestEnemy;
+    }
+
+    private void TakeDamage(int damage)
+    {
+        if (titanEmbarked)
+        {
+            playerTitanCurrentHealth -= damage;
+            if (playerTitanCurrentHealth <= 0)
+            {
+                // TODO I think there should be some animation for the titan dying
+                Destroy(playerTitan);
+                titanExists = false;
+            }
+        }
+        else
+        {
+            playerPilotCurrentHealth -= damage;
+            if (playerPilotCurrentHealth <= 0)
+            {
+                gameManager.LoadGameOver();
+            }
+        }
+    }
+
+    private IEnumerator ResetCamera()
+    {
+        yield return new WaitForSeconds(2f);
+        GetComponent<FirstPersonController>().autoAim = false;
     }
 }

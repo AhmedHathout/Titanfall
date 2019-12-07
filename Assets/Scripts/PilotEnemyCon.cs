@@ -35,7 +35,7 @@ public class PilotEnemyCon : MonoBehaviour
             {
                 GotoNext();
             }
-            transform.Translate(0, 0, 1);
+            transform.Translate(0, 0, Time.deltaTime * 45);
         }
         if (transform.position.z - FindObjectOfType<Crouch>().transform.position.z < 332 && !chasing)
         {
@@ -45,7 +45,7 @@ public class PilotEnemyCon : MonoBehaviour
         if (agent.remainingDistance > 200 && chasing)
         {
             agent.destination = target.position;
-            transform.Translate(0, 0, 2);
+            transform.Translate(0, 0, Time.deltaTime * 90);
             anim.SetBool("isRunning", true);
             anim.SetBool("isShooting", false);
         }

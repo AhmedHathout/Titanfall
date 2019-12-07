@@ -6,6 +6,7 @@ public class AssignPauseMenuButtons : MonoBehaviour
 {
     private GameManager gameManager = GameManager.instance;
     private Assets.Scripts.PauseMenu pauseMenu;
+    public GameObject pauseMenuPanel;
     
     private Button resume;
     private Button restartLevel;
@@ -28,7 +29,7 @@ public class AssignPauseMenuButtons : MonoBehaviour
 
         resume.onClick.AddListener(delegate
         {
-            pauseMenu.TogglePause();
+            gameManager.TogglePause(pauseMenuPanel);
         });
         restartLevel.onClick.AddListener(delegate
         {

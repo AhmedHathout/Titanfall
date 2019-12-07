@@ -9,12 +9,12 @@ namespace Assets.Scripts
         public GameObject pauseMenuPanel;
         private GameManager gameManager = GameManager.instance;
 
-        public void TogglePause()
-        {
-            gameManager.gameIsPaused = !gameManager.gameIsPaused;
-            pauseMenuPanel.SetActive(gameManager.gameIsPaused);
-            Time.timeScale = 1 - Time.timeScale;
-        }
+        //public void TogglePause()
+        //{
+        //    gameManager.gameIsPaused = !gameManager.gameIsPaused;
+        //    pauseMenuPanel.SetActive(gameManager.gameIsPaused);
+        //    Time.timeScale = 1 - Time.timeScale;
+        //}
 
         private void Update()
         {
@@ -22,7 +22,7 @@ namespace Assets.Scripts
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    TogglePause();
+                    gameManager.TogglePause(pauseMenuPanel);
                 }
             }
         }
