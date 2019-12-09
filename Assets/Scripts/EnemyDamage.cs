@@ -34,11 +34,11 @@ public class EnemyDamage : MonoBehaviour
         {
             if (this.name.Contains("Solidier"))
             {
-                FindObjectOfType<CallTitan>().titanMeter += pilotDyingMeterIncrementer;
+                FindObjectOfType<CallTitan>().titanFallMeter += pilotDyingMeterIncrementer;
             }
             else if (this.name.Contains("Warrior"))
             {
-                FindObjectOfType<CallTitan>().titanMeter += titanDyingMeterIncrementer;
+                FindObjectOfType<CallTitan>().titanFallMeter += titanDyingMeterIncrementer;
             }
             else
             {

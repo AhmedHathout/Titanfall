@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class CallTitan : MonoBehaviour
 {
     // TODO Handle not taking damage while using the defensive ability shield
     private GameManager gameManager = GameManager.instance;
 
+    public int numberOfEnemiesKilled = 0;
+    private int totalNumberOfEnemies = 15;
+
     public GameObject playerTitan;
-    public int titanMeter = 0;
-    public static int fullTitanMeter = 100;
+    public int titanFallMeter = 0;
+    public static int titanFallMaxValue = 100;
 
     public static int scalingValue = 30;
 
@@ -18,7 +22,7 @@ public class CallTitan : MonoBehaviour
     public int embarkDistance = 50;
 
     public int dashMeter = 0;
-    public int maximumDashMeterValue = 3;
+    public int dashMeterMaxValue = 3;
 
     public int dashDistance = 500;
 
@@ -45,12 +49,31 @@ public class CallTitan : MonoBehaviour
     public int playerPilotCurrentHealth = 100;
 
     public Transform aimedEnemy;
+    
+    public GameObject pilotHealthBarImage;
+    public GameObject titanHealthBarImager;
+    public GameObject dashBarImage;
+    public GameObject titanFallBarImage;
+    public GameObject defensiveAbilityBarText;
+    public GameObject coreAbilityBarImage;
+
+    [HideInInspector]
+    public int killingPilotPoints = 10;
+    [HideInInspector]
+    public int killingTitanPoints = 50;
+
+    public int secondsPassedSinceLastDamage = 0;
+    private int timeToRegenerateHealth = 3;
+    private int amountOfHealthToRegenerate = 5;
+    private Health health;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = GetComponent<Health>();
         StartCoroutine(IncrementDashMeter());
         StartCoroutine(IncrementDefensiveAbility());
+        StartCoroutine(IncreaseHealth());
     }
 
     // Update is called once per frame
@@ -62,16 +85,23 @@ public class CallTitan : MonoBehaviour
         activateDefensiveAbility();
         defensiveAbilityShield.SetActive(defensiveAbilityActivated);
         CoreAbility();
+
+        pilotHealthBarImage.GetComponent<Image>().fillAmount = playerPilotCurrentHealth  * 1f/ playerPilotMaxHealth;
+        titanHealthBarImager.GetComponent<Image>().fillAmount = playerTitanCurrentHealth * 1f/ playerTitanMaxHealth;
+        dashBarImage.GetComponent<Image>().fillAmount = dashMeter * 1f/ dashMeterMaxValue;
+        titanFallBarImage.GetComponent<Image>().fillAmount = titanFallMeter * 1f/ titanFallMaxValue;
+        defensiveAbilityBarText.GetComponent<Text>().text = (defensiveAbilityMaxValue - defensiveAbilityMeter) + "";
+        coreAbilityBarImage.GetComponent<Image>().fillAmount = coreAbilityMeter * 1f / coreAbilityMaxValue;
+
     }
 
     private void CallInTitan()
     {
         if (Input.GetButtonDown("Call Titan"))
         {
-            Debug.Log("Calling Titan");
-            if (titanMeter >= fullTitanMeter)
+            if (titanFallMeter >= titanFallMaxValue && !titanExists)
             {
-                titanMeter = 0;
+                titanFallMeter = 0;
                 playerTitan.transform.position = new Vector3(transform.position.x, playerTitan.transform.position.y, transform.position.z);
                 playerTitan.SetActive(true);
                 titanExists = true;
@@ -80,7 +110,7 @@ public class CallTitan : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            titanMeter = fullTitanMeter;
+            titanFallMeter = titanFallMaxValue;
         }
     }
 
@@ -118,7 +148,7 @@ public class CallTitan : MonoBehaviour
 
     public void IncrementTitanMeter(int value)
     {
-        titanMeter = Mathf.Min(titanMeter + value, fullTitanMeter);
+        titanFallMeter = Mathf.Min(titanFallMeter + value, titanFallMaxValue);
     }
 
     IEnumerator IncrementDashMeter()
@@ -126,18 +156,18 @@ public class CallTitan : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(timeToIncreaseDash);
-            dashMeter = Mathf.Min(dashMeter + 1, maximumDashMeterValue);
+            dashMeter = Mathf.Min(dashMeter + 1, dashMeterMaxValue);
         }
     }
 
     public void Dash()
     {
-        if (Input.GetButtonDown("Jump") && dashMeter > 0)
+        if (Input.GetButtonDown("Jump") && dashMeter > 0 && titanEmbarked)
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
-            GetComponent<CharacterController>().Move(new Vector3(horizontal * 150, 0, vertical * 150));
+            GetComponent<CharacterController>().Move(new Vector3(transform.right.x * horizontal * 150, 0,transform.forward.z * vertical * 150));
 
             dashMeter -= 1;
         }
@@ -184,7 +214,7 @@ public class CallTitan : MonoBehaviour
         }
         if (Input.GetButtonDown("Core Ability"))
         {
-            if (coreAbilityMeter >= coreAbilityMaxValue)
+            if (coreAbilityMeter >= coreAbilityMaxValue && titanEmbarked)
             {
                 coreAbilityMeter = 0;
 
@@ -253,5 +283,31 @@ public class CallTitan : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         GetComponent<FirstPersonController>().autoAim = false;
+    }
+
+    public void PlayerKilledEnemy(int amountToIncrease)
+    {
+        numberOfEnemiesKilled++;
+
+        if (titanEmbarked)
+        {
+            coreAbilityMeter = Mathf.Min(coreAbilityMeter + amountToIncrease, coreAbilityMaxValue);
+        }
+
+        titanFallMeter = Mathf.Min(titanFallMeter + amountToIncrease, titanFallMaxValue);
+    }
+
+    private IEnumerator IncreaseHealth()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            secondsPassedSinceLastDamage += 1;
+            if (secondsPassedSinceLastDamage == timeToRegenerateHealth)
+            {
+                secondsPassedSinceLastDamage = 0;
+                playerPilotCurrentHealth += amountOfHealthToRegenerate;
+            }
+        }
     }
 }

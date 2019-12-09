@@ -52,6 +52,7 @@ public class TitanCon : MonoBehaviour
         {
             agent.destination = target.position;
             anim.SetBool("isShooting", true);
+            //to do
             StartCoroutine("Fire");
         }
         if (health <= 0)

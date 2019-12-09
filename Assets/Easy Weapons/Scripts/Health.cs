@@ -8,20 +8,25 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    private GameManager gameManager = GameManager.instance;
+    public GameObject FPS;
+
 	public bool canDie = true;					// Whether or not this health can die
 	
 	public float startingHealth = 100.0f;		// The amount of health to start with
 	public float maxHealth = 100.0f;			// The maximum amount of health
-	private float currentHealth;				// The current ammount of health
+	public float currentHealth;				// The current ammount of health
 
 	public bool replaceWhenDead = false;		// Whether or not a dead replacement should be instantiated.  (Useful for breaking/shattering/exploding effects)
 	public GameObject deadReplacement;			// The prefab to instantiate when this GameObject dies
 	public bool makeExplosion = false;			// Whether or not an explosion prefab should be instantiated
 	public GameObject explosion;				// The explosion prefab to be instantiated
 
+    public bool isTitan;
 	public bool isPlayer = false;				// Whether or not this health is the player
 	public GameObject deathCam;					// The camera to activate when the player dies
 
@@ -36,15 +41,37 @@ public class Health : MonoBehaviour
 
 	public void ChangeHealth(float amount)
 	{
-		// Change the health by the amount specified in the amount variable
-		currentHealth += amount;
+        // Change the health by the amount specified in the amount variable
+        // titan gets damage by the rocket and grenade launcher only 
+       
+        if ((!isTitan) || (amount <= -100)) { 
+            currentHealth += amount; 
+        }
 
+        GetComponentInChildren<Image>().fillAmount = currentHealth * 1f / maxHealth;
+
+        //if (currentHealth > 0 && amount < 0)
+        //{
+
+        //}
 		// If the health runs out, then Die.
 		if (currentHealth <= 0 && !dead && canDie)
 			Die();
 
-		// Make sure that the health never exceeds the maximum health
-		else if (currentHealth > maxHealth)
+        if (isPlayer)
+        {
+            FPS.GetComponent<CallTitan>().secondsPassedSinceLastDamage = 0;
+        }
+
+        TitanCon titanController = GetComponent<TitanCon>();
+        if (titanController != null && amount <= -100)
+        {
+            titanController.anim.SetBool("isHit", true);
+            StartCoroutine(GetHit());
+        }
+
+        // Make sure that the health never exceeds the maximum health
+        else if (currentHealth > maxHealth)
 			currentHealth = maxHealth;
 	}
 
@@ -59,10 +86,44 @@ public class Health : MonoBehaviour
 		if (makeExplosion)
 			Instantiate(explosion, transform.position, transform.rotation);
 
-		if (isPlayer && deathCam != null)
-			deathCam.SetActive(true);
+		//if (isPlayer && deathCam != null)
+		//	deathCam.SetActive(true);
+
+        if (isPlayer)
+        {
+            gameManager.LoadGameOver();
+        }
+
+        TitanCon titanController = GetComponent<TitanCon>();
+        if (titanController != null) {
+            titanController.anim.SetBool("isDead", true);
+            CallTitan callTitan = FPS.GetComponent<CallTitan>();
+            callTitan.PlayerKilledEnemy(callTitan.killingTitanPoints);
+        }
+
+        else
+        {
+            GetComponent<PilotEnemyCon>().anim.SetBool("isDead", true);
+            CallTitan callTitan = FPS.GetComponent<CallTitan>();
+            callTitan.PlayerKilledEnemy(callTitan.killingPilotPoints);
+        }
+
+        StartCoroutine(DestroyEnemy());
 
 		// Remove this GameObject from the scene
-		Destroy(gameObject);
+		
 	}
+
+    IEnumerator DestroyEnemy()
+    {
+        yield return new WaitForSeconds(4);
+        Destroy(gameObject);
+    }
+
+    IEnumerator GetHit()
+    {
+        yield return new WaitForSeconds(1);
+        TitanCon titanController = GetComponent<TitanCon>();
+        titanController.anim.SetBool("isHit", false);
+    }
 }

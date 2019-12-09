@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 3}
-  m_LocalScale: {x: 400, y: 400, z: 400}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children:
   - {fileID: 400000}
   m_Father: {fileID: 0}
@@ -171,12 +171,12 @@ MonoBehaviour:
   projectileType: 0
   damageType: 1
   damage: 125
-  speed: 10000
+  speed: 10
   initialForce: 5000
   lifetime: 5
   seekRate: 1
-  seekTag: enemy
-  explosion: {fileID: 100002, guid: deae065280038074ca61e2130d04332c, type: 3}
+  seekTag: Enemy
+  explosion: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 3}
   targetListUpdateRate: 1
   clusterBomb: {fileID: 0}
   clusterBombNum: 6
