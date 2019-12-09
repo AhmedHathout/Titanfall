@@ -1223,6 +1223,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 400
   maxHealth: 400
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -1230,6 +1231,7 @@ MonoBehaviour:
   isTitan: 1
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1001 &199241560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1435,6 +1437,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -1442,6 +1445,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &217910357
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2340,6 +2344,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -2347,6 +2352,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &344368937
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3158,6 +3164,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 400
   maxHealth: 400
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -3165,6 +3172,7 @@ MonoBehaviour:
   isTitan: 1
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1 &462562271
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,6 +3367,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -3366,6 +3375,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &476971003
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3416,6 +3426,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 400
   maxHealth: 400
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -3423,6 +3434,7 @@ MonoBehaviour:
   isTitan: 1
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1001 &515155051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5274,6 +5286,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -5281,6 +5294,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &819701553
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5427,6 +5441,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -5434,6 +5449,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &840364646
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5622,6 +5638,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -5629,6 +5646,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &872270115
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6224,6 +6242,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 400
   maxHealth: 400
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -6231,6 +6250,7 @@ MonoBehaviour:
   isTitan: 1
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1 &1034996262
 GameObject:
   m_ObjectHideFlags: 0
@@ -6975,6 +6995,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -6982,6 +7003,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &1230688291
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7390,6 +7412,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 400
   maxHealth: 400
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -7397,6 +7420,7 @@ MonoBehaviour:
   isTitan: 1
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1 &1299529545
 GameObject:
   m_ObjectHideFlags: 0
@@ -8477,6 +8501,7 @@ MonoBehaviour:
   defensiveAbilityDuration: 10
   coreAbilityMeter: 0
   coreAbilityMaxValue: 100
+  coreAbilityActivated: 0
   titanHUD: {fileID: 1956263695}
   pilotHUD: {fileID: 1984699459}
   playerTitanMaxHealth: 400
@@ -8493,6 +8518,32 @@ MonoBehaviour:
   coreAbilityBarImage: {fileID: 727663914}
   killingPilotPoints: 10
   killingTitanPoints: 50
+  secondsPassedSinceLastDamage: 0
+--- !u!114 &1602900995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602900993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e1876ddae4a1046b64b5dd5c293c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: {fileID: 1602900993}
+  canDie: 1
+  startingHealth: 100
+  maxHealth: 100
+  currentHealth: 0
+  replaceWhenDead: 0
+  deadReplacement: {fileID: 0}
+  makeExplosion: 0
+  explosion: {fileID: 0}
+  isTitan: 0
+  isPlayer: 1
+  deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1 &1611417641
 GameObject:
   m_ObjectHideFlags: 0
@@ -9144,6 +9195,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -9151,6 +9203,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!1001 &1840571301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10149,6 +10202,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -10156,6 +10210,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &1956813775
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11126,6 +11181,7 @@ MonoBehaviour:
   canDie: 1
   startingHealth: 100
   maxHealth: 100
+  currentHealth: 0
   replaceWhenDead: 0
   deadReplacement: {fileID: 0}
   makeExplosion: 0
@@ -11133,6 +11189,7 @@ MonoBehaviour:
   isTitan: 0
   isPlayer: 0
   deathCam: {fileID: 0}
+  isInvincible: 0
 --- !u!136 &2134919868
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -31,12 +31,15 @@ public class Health : MonoBehaviour
 	public GameObject deathCam;					// The camera to activate when the player dies
 
 	private bool dead = false;					// Used to make sure the Die() function isn't called twice
+    public bool isInvincible = false;
 
+    private CallTitan callTitan;
 	// Use this for initialization
 	void Start()
 	{
 		// Initialize the currentHealth variable to the value specified by the user in startingHealth
 		currentHealth = startingHealth;
+        callTitan = GetComponent<CallTitan>();
 	}
 
 	public void ChangeHealth(float amount)
@@ -44,6 +47,11 @@ public class Health : MonoBehaviour
         // Change the health by the amount specified in the amount variable
         // titan gets damage by the rocket and grenade launcher only 
        
+        if (isInvincible)
+        {
+            return;
+        }
+
         if ((!isTitan) || (amount <= -100)) { 
             currentHealth += amount; 
         }
@@ -60,7 +68,8 @@ public class Health : MonoBehaviour
 
         if (isPlayer)
         {
-            FPS.GetComponent<CallTitan>().secondsPassedSinceLastDamage = 0;
+            callTitan.secondsPassedSinceLastDamage = 0;
+            callTitan.SetHealth((int)currentHealth);
         }
 
         TitanCon titanController = GetComponent<TitanCon>();

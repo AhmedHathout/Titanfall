@@ -37,6 +37,7 @@ public class CallTitan : MonoBehaviour
 
     public int coreAbilityMeter = 0;
     public int coreAbilityMaxValue = 100;
+    public bool coreAbilityActivated = false;
 
     public GameObject titanHUD;
     public GameObject pilotHUD;
@@ -82,7 +83,7 @@ public class CallTitan : MonoBehaviour
         CallInTitan();
         EmbarkTitan();
         Dash();
-        activateDefensiveAbility();
+        ActivateDefensiveAbility();
         defensiveAbilityShield.SetActive(defensiveAbilityActivated);
         CoreAbility();
 
@@ -125,6 +126,7 @@ public class CallTitan : MonoBehaviour
                 playerTitan.SetActive(false);
                 transform.localScale += new Vector3(scalingValue, scalingValue, scalingValue);
                 titanEmbarked = true;
+                health.currentHealth = playerTitanCurrentHealth;
             }
 
             else if (titanEmbarked)
@@ -133,17 +135,14 @@ public class CallTitan : MonoBehaviour
                 titanEmbarked = false;
                 transform.localScale -= new Vector3(scalingValue, scalingValue, scalingValue); ;
                 playerTitan.transform.position = transform.position;
+                health.currentHealth = playerPilotCurrentHealth;
             }
 
             GetComponent<FirstPersonController>().titanMode = titanEmbarked;
             GetComponent<Crouch>().canCrouch = !titanEmbarked;
             titanHUD.SetActive(titanEmbarked);
             pilotHUD.SetActive(!titanEmbarked);
-
-
         }
-
-        // TODO handle titan health
     }
 
     public void IncrementTitanMeter(int value)
@@ -170,12 +169,11 @@ public class CallTitan : MonoBehaviour
             GetComponent<CharacterController>().Move(new Vector3(transform.right.x * horizontal * 150, 0,transform.forward.z * vertical * 150));
 
             dashMeter -= 1;
+            StartCoroutine(MakePlayerInvincible());
         }
-
-        // TODO Make Player invincible
     }
 
-    public void activateDefensiveAbility()
+    public void ActivateDefensiveAbility()
     {
         if (Input.GetButtonDown("Defensive Ability"))
         {
@@ -231,8 +229,6 @@ public class CallTitan : MonoBehaviour
                     nearestenemy.transform.position.z);
                 transform.LookAt(aimedEnemy);
                 StartCoroutine(ResetCamera());
-
-                // TODO make the player aim at that enemy 
             }
         }
     }
@@ -281,7 +277,9 @@ public class CallTitan : MonoBehaviour
 
     private IEnumerator ResetCamera()
     {
+        coreAbilityActivated = true;
         yield return new WaitForSeconds(2f);
+        coreAbilityActivated = false;
         GetComponent<FirstPersonController>().autoAim = false;
     }
 
@@ -289,7 +287,7 @@ public class CallTitan : MonoBehaviour
     {
         numberOfEnemiesKilled++;
 
-        if (titanEmbarked)
+        if (titanEmbarked && !coreAbilityActivated)
         {
             coreAbilityMeter = Mathf.Min(coreAbilityMeter + amountToIncrease, coreAbilityMaxValue);
         }
@@ -309,5 +307,29 @@ public class CallTitan : MonoBehaviour
                 playerPilotCurrentHealth += amountOfHealthToRegenerate;
             }
         }
+    }
+
+    public void SetHealth(int newHealth)
+    {
+        if (titanEmbarked)
+        {
+            playerTitanCurrentHealth = newHealth;
+        }
+        else
+        {
+            playerPilotCurrentHealth = newHealth;
+        }
+    }
+
+    private IEnumerator MakePlayerInvincible()
+    {
+        // This is just in case we make the player invincible for the cheat
+        if (health.isInvincible)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        health.isInvincible = true;
+        yield return new WaitForSeconds(0.5f);
+        health.isInvincible = false;
     }
 }
