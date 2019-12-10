@@ -126,19 +126,19 @@ public class AudioManager : MonoBehaviour
     //    StopSoundEffect(currentlyPlayingSoundEffect);
     //}
 
-    //public void PlaySoundEffect(string name)
-    //{
-    //    if (currentlyPlayingSoundEffect == name)
-    //        return;
-    //    StopSoundEffect(currentlyPlayingSoundEffect);
-    //    currentlyPlayingSoundEffect = "";
-    //    SoundTrack soundTrack = Array.Find(music, s => s.name == name);
-    //    if (soundTrack != null)
-    //    {
-    //        soundTrack.Play();
-    //        currentlyPlayingSoundEffect = name;
-    //    }
-    //}
+    public void PlaySoundEffect(string name)
+    {
+        //if (currentlyPlayingSoundEffect == name)
+        //    return;
+        //StopSoundEffect(currentlyPlayingSoundEffect);
+        //currentlyPlayingSoundEffect = "";
+        SoundTrack soundTrack = Array.Find(soundEffects, s => s.name == name);
+        if (soundTrack != null)
+        {
+            soundTrack.Play();
+            //currentlyPlayingSoundEffect = name;
+        }
+    }
 
     public void SetVolume(float newVolume, SoundTrack[] soundTracks)
     {
@@ -192,5 +192,13 @@ public class AudioManager : MonoBehaviour
                 effectsVolume = effectLevelSlider.value;  
             });
         effectLevelSlider.value = effectsVolume;
+    }
+
+    public void AdjustWeaponsVolume(AudioSource[] weaponsAudioSources)
+    {
+        foreach(AudioSource audioSource in weaponsAudioSources)
+        {
+            audioSource.volume = effectsVolume;
+        }
     }
 }

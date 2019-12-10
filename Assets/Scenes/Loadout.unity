@@ -213,7 +213,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: e870f12990348ad4b94b4cdb8f09b7a0, type: 3}
       propertyPath: m_Name
-      value: MARMO3
+      value: Shotgun
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: e870f12990348ad4b94b4cdb8f09b7a0, type: 3}
       propertyPath: m_IsActive
@@ -317,7 +317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.381, y: 0.04710145}
   m_AnchorMax: {x: 0.6612709, y: 0.14127536}
-  m_AnchoredPosition: {x: 1.5, y: 2.3920002}
+  m_AnchoredPosition: {x: 1.5, y: 2.3920288}
   m_SizeDelta: {x: 5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &459051328
@@ -667,7 +667,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Titan Name
+  m_Text: Legion
 --- !u!222 &727552623
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -744,7 +744,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "ShotGun:\n\u2022 Damage Amount: 70\r\n\u2022 Firing Mode: single shot\r\n\u2022
+  m_Text: "Shotgun:\n\u2022 Damage Amount: 70\r\n\u2022 Firing Mode: single shot\r\n\u2022
     Fire Rate: 3\r\n\u2022 Ammo Count: 12\r\n\u2022 Range: 4\r"
 --- !u!222 &791262294
 CanvasRenderer:
@@ -822,7 +822,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Titan Info
+  m_Text: This titan has the predator cannon as its primary weapon. its defensive
+    ability is a shield. Its core ability is auto aiming at the closest enemy
 --- !u!222 &791774609
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1017,7 +1018,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 156968, guid: 0c71c2e2c11e70244bccb576cda20dd1, type: 3}
       propertyPath: m_Name
-      value: M79 Grenade Launcher
+      value: Grenade Launcher
       objectReference: {fileID: 0}
     - target: {fileID: 156968, guid: 0c71c2e2c11e70244bccb576cda20dd1, type: 3}
       propertyPath: m_IsActive
@@ -1137,7 +1138,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Assault Rifle
+  m_Text: M4
 --- !u!222 &1331411030
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1214,7 +1215,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ShotGun
+  m_Text: Shotgun
 --- !u!222 &1492480305
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1291,7 +1292,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Assault Rifle:\n\u2022 Damage Amount: 10\r\n\u2022 Firing Mode: Automatic\r\n\u2022
+  m_Text: "M4 assault rifle:\n\u2022 Damage Amount: 10\r\n\u2022 Firing Mode: Automatic\r\n\u2022
     Fire Rate: 10\r\n\u2022 Ammo Count: 35\r\n\u2022 Range: 65"
 --- !u!222 &1611284282
 CanvasRenderer:
@@ -1337,7 +1338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.58019495, y: 0.17388406}
   m_AnchorMax: {x: 0.86544055, y: 0.25724638}
-  m_AnchoredPosition: {x: 2.6600037, y: -1.1000061}
+  m_AnchoredPosition: {x: 2.6600342, y: -1.1000061}
   m_SizeDelta: {x: 2, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612483384
@@ -2110,7 +2111,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 153586, guid: 2f98296574acdd243a88ee1c60c2023c, type: 3}
       propertyPath: m_Name
-      value: Modern Russian AR
+      value: M4
       objectReference: {fileID: 0}
     - target: {fileID: 153586, guid: 2f98296574acdd243a88ee1c60c2023c, type: 3}
       propertyPath: m_IsActive

@@ -11,13 +11,24 @@ public class PilotEnemyCon : MonoBehaviour
     public Transform[] points;
     public int pointIndex = 0;
     public bool chasing;
-    public int health;
+    //public int health;
+
+    [Tooltip("0 is assult rifle, 1 is shotgun")]
+    public int weaponType;
+    private int assualtRifleDamage = 10;
+    private int shotgunDamage = 50;
+    public GameObject FPS;
+
+    public bool isFiring = false;
+    public bool isDead = false;
+    private Health enemyHealth;
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         chasing = false;
-        health = 100;
+        enemyHealth = GetComponent<Health>();
     }
 
     void GotoNext()
@@ -53,19 +64,44 @@ public class PilotEnemyCon : MonoBehaviour
         {
             agent.destination = target.position;
             anim.SetBool("isShooting", true);
-            //to do 
-            StartCoroutine("Fire");
+            
+            if (!isFiring)
+            {
+                StartCoroutine(Fire());
+            }
         }
-        if (health <= 0)
+        if (enemyHealth.currentHealth <= 0)
         {
-            anim.SetBool("isDead", true);
-            agent.destination = transform.position;
+            isDead = true;
+            //anim.SetBool("isDead", true);
+            //agent.destination = transform.position;
         }
     }
 
     IEnumerator Fire()
     {
+        isFiring = true;
         yield return (new WaitForSeconds(1.5f));
-        anim.SetTrigger("isFire");
+
+        if (agent.remainingDistance < 200 && !isDead)
+        {
+            anim.SetTrigger("isFire");
+            Health health = FPS.GetComponent<Health>();
+            if (weaponType == 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    health.ChangeHealth(-assualtRifleDamage);
+                    yield return new WaitForSeconds(0.2f);
+                }
+            }
+
+            else
+            {
+                health.ChangeHealth(-shotgunDamage);
+            }
+        }
+        
+        isFiring = false;
     }
 }

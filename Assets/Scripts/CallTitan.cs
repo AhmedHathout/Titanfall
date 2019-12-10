@@ -8,6 +8,7 @@ public class CallTitan : MonoBehaviour
 {
     // TODO Handle not taking damage while using the defensive ability shield
     private GameManager gameManager = GameManager.instance;
+    private AudioManager audioManager = AudioManager.instance;
 
     public int numberOfEnemiesKilled = 0;
     private int totalNumberOfEnemies = 15;
@@ -68,10 +69,12 @@ public class CallTitan : MonoBehaviour
     private int amountOfHealthToRegenerate = 5;
     private Health health;
 
+    private weaponswitch weaponSwitch;
     // Start is called before the first frame update
     void Start()
     {
         health = GetComponent<Health>();
+        weaponSwitch = GetComponentInChildren<weaponswitch>();
         StartCoroutine(IncrementDashMeter());
         StartCoroutine(IncrementDefensiveAbility());
         StartCoroutine(IncreaseHealth());
@@ -102,6 +105,7 @@ public class CallTitan : MonoBehaviour
         {
             if (titanFallMeter >= titanFallMaxValue && !titanExists)
             {
+                audioManager.PlaySoundEffect("Titanfall");
                 titanFallMeter = 0;
                 playerTitan.transform.position = new Vector3(transform.position.x, playerTitan.transform.position.y, transform.position.z);
                 playerTitan.SetActive(true);
@@ -126,23 +130,35 @@ public class CallTitan : MonoBehaviour
                 playerTitan.SetActive(false);
                 transform.localScale += new Vector3(scalingValue, scalingValue, scalingValue);
                 titanEmbarked = true;
+                titanHUD.SetActive(titanEmbarked);
+                pilotHUD.SetActive(!titanEmbarked);
                 health.currentHealth = playerTitanCurrentHealth;
+                health.maxHealth = playerTitanMaxHealth;
+                weaponSwitch.SwitchToTitanWeapon();
             }
 
             else if (titanEmbarked)
             {
-                playerTitan.SetActive(true);
-                titanEmbarked = false;
-                transform.localScale -= new Vector3(scalingValue, scalingValue, scalingValue); ;
-                playerTitan.transform.position = transform.position;
-                health.currentHealth = playerPilotCurrentHealth;
+                LeaveTitan();
             }
-
-            GetComponent<FirstPersonController>().titanMode = titanEmbarked;
-            GetComponent<Crouch>().canCrouch = !titanEmbarked;
-            titanHUD.SetActive(titanEmbarked);
-            pilotHUD.SetActive(!titanEmbarked);
         }
+
+        GetComponent<FirstPersonController>().titanMode = titanEmbarked;
+        GetComponent<Crouch>().canCrouch = !titanEmbarked;
+        
+    }
+
+    private void LeaveTitan()
+    {
+        playerTitan.SetActive(true);
+        titanEmbarked = false;
+        titanHUD.SetActive(titanEmbarked);
+        pilotHUD.SetActive(!titanEmbarked);
+        transform.localScale -= new Vector3(scalingValue, scalingValue, scalingValue); ;
+        playerTitan.transform.position = transform.position;
+        health.currentHealth = playerPilotCurrentHealth;
+        health.maxHealth = playerPilotMaxHealth;
+        weaponSwitch.SwitchToPilotWeapon();
     }
 
     public void IncrementTitanMeter(int value)
@@ -179,14 +195,15 @@ public class CallTitan : MonoBehaviour
         {
             if (defensiveAbilityMeter >= defensiveAbilityMaxValue && titanEmbarked)
             {
+                audioManager.PlaySoundEffect("Defensive Ability");
                 defensiveAbilityMeter = 0;
                 defensiveAbilityActivated = true;
-                StartCoroutine(DeactivatedefensiveAbility());
+                StartCoroutine(DeactivateDefensiveAbility());
             }
         }
     }
 
-    IEnumerator DeactivatedefensiveAbility()
+    IEnumerator DeactivateDefensiveAbility()
     {
         yield return new WaitForSeconds(defensiveAbilityDuration);
         defensiveAbilityActivated = false;
@@ -214,6 +231,7 @@ public class CallTitan : MonoBehaviour
         {
             if (coreAbilityMeter >= coreAbilityMaxValue && titanEmbarked)
             {
+                audioManager.PlaySoundEffect("Core Ability");
                 coreAbilityMeter = 0;
 
                 GameObject nearestenemy = getNearestEnemy();
@@ -304,7 +322,11 @@ public class CallTitan : MonoBehaviour
             if (secondsPassedSinceLastDamage == timeToRegenerateHealth)
             {
                 secondsPassedSinceLastDamage = 0;
-                playerPilotCurrentHealth += amountOfHealthToRegenerate;
+                if (playerPilotCurrentHealth < playerPilotMaxHealth)
+                {
+                    playerPilotCurrentHealth += amountOfHealthToRegenerate;
+                    health.currentHealth = playerPilotCurrentHealth;
+                }
             }
         }
     }
@@ -331,5 +353,33 @@ public class CallTitan : MonoBehaviour
         health.isInvincible = true;
         yield return new WaitForSeconds(0.5f);
         health.isInvincible = false;
+    }
+
+    public void HandleHealthReachingZero()
+    {
+        if (!titanEmbarked)
+        {
+            audioManager.PlaySoundEffect("Game Over");
+            gameManager.LoadGameOver();
+        }
+
+        else
+        {
+            LeaveTitan();
+            titanExists = false;
+            playerTitan.SetActive(false);
+            playerTitanCurrentHealth = playerTitanMaxHealth;
+            coreAbilityMeter = 0;
+            defensiveAbilityMeter = 0;
+            dashMeter = 0;
+        }
+    }
+
+    public void LoadLevel2()
+    {
+        if (numberOfEnemiesKilled == totalNumberOfEnemies)
+        {
+            gameManager.LoadLevel2();
+        }
     }
 }

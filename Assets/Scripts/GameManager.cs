@@ -8,12 +8,15 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    private AudioManager audioManager;
     private static SceneChanger sceneChanger;
-    private string currentScene;
+
+    public string currentScene;
 
     public List<string> weapons = new List<string>();
 
-    [HideInInspector]
+    //[HideInInspector]
     public int currentLevel = 0;
     [HideInInspector]
     public bool gameIsPaused = false;
@@ -25,6 +28,8 @@ public class GameManager : MonoBehaviour
     private static string credits = "Credits";
     private static string howToPlay = "HowToPlay";
     private static string loadout = "Loadout";
+
+    public List<string> selectedWeapons;
 
     void Awake()
     {
@@ -43,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        audioManager = AudioManager.instance;
         sceneChanger = GetComponent<SceneChanger>();
         currentScene = SceneManager.GetActiveScene().name;
 
@@ -66,12 +72,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(AssignCreditsButton());
     }
 
-    public void StartGame()
-    {
-        currentScene = level1;
-        sceneChanger.Level1();
-        currentLevel = 1;
-    }
+    //public void StartGame()
+    //{
+    //    currentScene = level1;
+    //    sceneChanger.Level1();
+    //    currentLevel = 1;
+    //}
 
     public void LoadHowToPlay()
     {
@@ -85,6 +91,15 @@ public class GameManager : MonoBehaviour
         gameIsPaused = !gameIsPaused;
         pauseMenuPanel.SetActive(gameIsPaused);
         Time.timeScale = 1 - Time.timeScale;
+
+        if (gameIsPaused)
+        {
+            audioManager.Play("Main Menu");
+        }
+        else
+        {
+            audioManager.Play("Game");
+        }
     }
 
     private void ShowCursor()
@@ -134,16 +149,21 @@ public class GameManager : MonoBehaviour
         StartCoroutine(AssignMainMenuButton());
     }
 
-    private void LoadLevel1()
+    public void LoadLevel1()
     {
         currentScene = level1;
+        currentLevel = 1;
         sceneChanger.Level1();
+        StartCoroutine(AdjustWeaponsVolume());
+        audioManager.Play("Game");
     }
 
-    private void LoadLevel2()
+    public void LoadLevel2()
     {
         currentScene = level2;
         sceneChanger.Level2();
+        currentLevel = 2;
+        audioManager.Play("Level 2");
     }
 
     public void LoadNextLevel()
@@ -166,6 +186,7 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         currentScene = mainMenu;
+        currentLevel = 0;
         sceneChanger.MainMenu();
         ShowCursor();
         AssignMainMenuButtons();
@@ -294,19 +315,12 @@ public class GameManager : MonoBehaviour
             weapons.Add(weaponselect[i]);
         }
     }
-    //private void DestroyFPSController()
-    //{
-    //    ShowCursor();
-    //    GameObject FPS = GameObject.Find("FPSController");
-    //    Debug.Log(FPS);
-    //    if (FPS != null)
-    //    {
-    //        Debug.Log("Destroying FPS");
-    //        Destroy(FPS);
-    //        FPS = GameObject.Find("FPSController");
-    //        Destroy(FPS);
-    //        Destroy(null);
-    //        Debug.Log("Found another one" + FPS);
-    //    }
-    //}
+
+    IEnumerator AdjustWeaponsVolume ()
+    {
+        // Wait just in case the fps controller was not loaded yet
+        yield return new WaitForSeconds(0.1f);
+        AudioSource[] weaponsAudioSources = GameObject.Find("FPSController").GetComponentsInChildren<AudioSource>(true);
+        audioManager.AdjustWeaponsVolume(weaponsAudioSources);
+    }
 }

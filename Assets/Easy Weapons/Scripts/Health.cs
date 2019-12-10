@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     private GameManager gameManager = GameManager.instance;
+    private AudioManager audioManager = AudioManager.instance;
     public GameObject FPS;
 
 	public bool canDie = true;					// Whether or not this health can die
@@ -44,26 +45,30 @@ public class Health : MonoBehaviour
 
 	public void ChangeHealth(float amount)
 	{
-        // Change the health by the amount specified in the amount variable
-        // titan gets damage by the rocket and grenade launcher only 
        
-        if (isInvincible)
+        if (isInvincible || (isPlayer && callTitan.defensiveAbilityActivated))
         {
             return;
         }
 
-        if ((!isTitan) || (amount <= -100)) { 
+        audioManager.PlaySoundEffect("Hit");
+        // Change the health by the amount specified in the amount variable
+        // titan gets damage by the rocket and grenade launcher only 
+        if ((!isTitan) || (amount <= -100 || amount == -15)) { 
             currentHealth += amount; 
         }
 
-        GetComponentInChildren<Image>().fillAmount = currentHealth * 1f / maxHealth;
+        if (!isPlayer)
+        {
+            GetComponentInChildren<Image>().fillAmount = currentHealth * 1f / maxHealth;
+        }
 
-        //if (currentHealth > 0 && amount < 0)
+        //if (currentHealth < 0 && isPlayer)
         //{
-
+        //    callTitan.HandleHealthReachingZero();
         //}
-		// If the health runs out, then Die.
-		if (currentHealth <= 0 && !dead && canDie)
+        // If the health runs out, then Die.
+        if (currentHealth <= 0 && !dead && canDie)
 			Die();
 
         if (isPlayer)
@@ -100,7 +105,8 @@ public class Health : MonoBehaviour
 
         if (isPlayer)
         {
-            gameManager.LoadGameOver();
+            callTitan.HandleHealthReachingZero();
+            dead = false;
         }
 
         TitanCon titanController = GetComponent<TitanCon>();
@@ -110,18 +116,22 @@ public class Health : MonoBehaviour
             callTitan.PlayerKilledEnemy(callTitan.killingTitanPoints);
         }
 
-        else
+        else if (!isPlayer)
         {
             GetComponent<PilotEnemyCon>().anim.SetBool("isDead", true);
             CallTitan callTitan = FPS.GetComponent<CallTitan>();
             callTitan.PlayerKilledEnemy(callTitan.killingPilotPoints);
         }
 
-        StartCoroutine(DestroyEnemy());
+        if (!isPlayer)
+        {
+            audioManager.PlaySoundEffect("Enemy Killed");
+            StartCoroutine(DestroyEnemy());
+        }
 
-		// Remove this GameObject from the scene
-		
-	}
+        // Remove this GameObject from the scene
+
+    }
 
     IEnumerator DestroyEnemy()
     {
@@ -135,4 +145,5 @@ public class Health : MonoBehaviour
         TitanCon titanController = GetComponent<TitanCon>();
         titanController.anim.SetBool("isHit", false);
     }
+
 }

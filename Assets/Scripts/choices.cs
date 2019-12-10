@@ -31,8 +31,12 @@ public class choices : MonoBehaviour
 
     public List<string> weapons = new List<string>();
 
-    GameManager gm;
+    private GameManager gameManager;
 
+    private void Start()
+    {
+        gameManager = GameManager.instance;
+    }
     void OnEnable()
     {
 
@@ -47,7 +51,8 @@ public class choices : MonoBehaviour
 
         if (counter ==1)
         {
-            SceneManager.LoadScene("Level1");
+            gameManager.LoadLevel1();
+            gameManager.selectedWeapons = weapons;
         }
         shotgun.SetActive(false);
         Rifle.SetActive(false);
@@ -73,7 +78,9 @@ public class choices : MonoBehaviour
         if (counter == 1)
         {
             //gm.weaponschosen(weapons);
-            SceneManager.LoadScene("Level1");
+            gameManager.LoadLevel1();
+            gameManager.selectedWeapons = weapons;
+
         }
 
         shotgun.SetActive(false);
@@ -102,20 +109,14 @@ public class choices : MonoBehaviour
       button2.GetComponent<Button>().gameObject.SetActive(true);
 
       button3.SetActive(false);
-        titan.SetActive(false);
-        titantext.SetActive(false);
-        titantext1.SetActive(false);
+      titan.SetActive(false);
+      titantext.SetActive(false);
+      titantext1.SetActive(false);
 
-        t1.SetActive(true);
+      t1.SetActive(true);
       t2.SetActive(true);
       t3.SetActive(true);
       shotgun.SetActive(true);
       Rifle.SetActive(true);
-   
-
-}
-
-   
-
-    
+    }
 }
