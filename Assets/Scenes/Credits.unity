@@ -1049,8 +1049,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Unity Standard Assets\nhttps://assetstore.unity.com/3d\r\nhttps://free3d.com\r\nhttps://mixamo.com\r\nhttps://www.blendswap.com\r\nhttps://sketchfab.com\r\n\rhttps://sketchfab.com/3d-models/ion-titanfall-2-a243bff5fa2e417091e4e34bc70c9764\n\rhttps://sketchfab.com/3d-models/titanfall-2-ronin-c9702fee67a64af1b255302289001145
-    https://sketchfab.com/3d-models/pilot-stim-titanfall-2-9f42c6d4503841a7a4729c2e9f64047c\nhttps://assetstore.unity.com/?category=2d%2Ftextures-materials\r\nhttps://www.textures.com\r\nhttps://quixel.com/megascans/library\nhttps://assetstore.unity.com/audio\r\nhttps://freesound.org\r\nhttps://filmmusic.io\r\nhttps://www.bensound.com\r\nhttps://www.purple-planet.com\r\nhttps://www.bfxr.net\r"
+  m_Text: "Unity Standard Assets\r\nhttps://assetstore.unity.com/3d\r\nhttps://free3d.com\r\nhttps://mixamo.com\r\nhttps://www.blendswap.com\r\nhttps://sketchfab.com\r\n\r\nhttps://sketchfab.com/3d-models/ion-titanfall-2-a243bff5fa2e417091e4e34bc70c9764\r\n\r\nhttps://sketchfab.com/3d-models/titanfall-2-ronin-c9702fee67a64af1b255302289001145
+    https://sketchfab.com/3d-models/pilot-stim-titanfall-2-9f42c6d4503841a7a4729c2e9f64047c\r\nhttps://assetstore.unity.com/?category=2d%2Ftextures-materials\r\nhttps://www.textures.com\r\nhttps://quixel.com/megascans/library\r\nhttps://assetstore.unity.com/audio\r\nhttps://freesound.org\r\nhttps://filmmusic.io\r\nhttps://www.bensound.com\r\nhttps://www.purple-planet.com\r\nhttps://www.bfxr.net\r\nhttps://assetstore.unity.com/packages/templates/systems/easy-weapons-19365?fbclid=IwAR3uWNeq1nlEBgYjZiuAkcqOtRsbaVzAWV9cs0MxXrEq5OGO1rzTkLRn7aw\r\nhttps://assetstore.unity.com/packages/3d/props/guns/modern-weapons-pack-14233\r\nhttps://assetstore.unity.com/packages/3d/characters/humanoids/sci-fi-soldier-29559\r\nhttps://assetstore.unity.com/packages/3d/characters/humanoids/sci-fi-warrior-pbr-hp-106154"
 --- !u!222 &2139512804
 CanvasRenderer:
   m_ObjectHideFlags: 0

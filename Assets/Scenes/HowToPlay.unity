@@ -899,7 +899,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Some text goes here
+  m_Text: "Controls :\r\nMovement either with arrows buttons or WASD buttons\r\nJump
+    : Space button (twice for double jump)\r\nFire : Left click on mouse\r\nSprint
+    : Shift with direction\r\nWall run : Forward and sprint \r\nCrouch : C button\r\nSwap
+    weapons : Z button\r\nReload : R button\r\nCall Titan : P button\r\nEmbark titan
+    : E button \r\nDisembark titan : E button (while embarking)\r\nDash : Space button
+    with direction (Titan Mode)\r\nDefensive ability : D button (Titan Mode)"
 --- !u!222 &2139512804
 CanvasRenderer:
   m_ObjectHideFlags: 0
